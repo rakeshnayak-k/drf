@@ -11,7 +11,7 @@ from rest_framework import status
 # def hello_world(request):
 #     return Response({'msg':'Hello World'})
 
-@api_view(['POST','GET','PUT','DELETE'])
+@api_view(['POST','GET','PUT','DELETE','PATCH'])
 def students(request):
     if request.method == 'GET':
         try:
@@ -44,7 +44,19 @@ def students(request):
                 return Response({'msg':'Student Updated'},status=status.HTTP_201_CREATED)
             return Response({'error msg':serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
-            return Response({'error msg':str(e)})
+            return Response({'error msg':str(e)}, status=status.HTTP_400_BAD_REQUEST)
+    if request.method == 'PATCH':
+        try:
+            id = request.data.get('id',None)
+            stu = Students.objects.get(pk=id)
+            serializer = StudentSerializer(stu, data=request.data, partial=True)
+            if serializer.is_valid():
+                serializer.save()
+                return Response({'msg':'Student Updated'},status=status.HTTP_201_CREATED)
+            return Response({'error msg':serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            return Response({'error msg':str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        
     if request.method == 'DELETE':
         try:
             id = request.data.get('id',None)
