@@ -38,7 +38,7 @@ def students(request):
         try:
             id = request.data.get('id',None)
             stu = Students.objects.get(pk=id)
-            serializer = StudentSerializer(stu, data=request.data, partial=True)
+            serializer = StudentSerializer(stu, data=request.data)
             if serializer.is_valid():
                 serializer.save()
                 return Response({'msg':'Student Updated'},status=status.HTTP_201_CREATED)
