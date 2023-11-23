@@ -8,11 +8,12 @@ from rest_framework import status
 
 # Create your views here.
 class StudentsAPI(APIView):
-    def get(self,request,format=None):
+    def get(self,request,pk=None,format=None):
         try:
-            in_id = request.data.get('id',None)
-            if in_id is not None:
-                stu = Students.objects.get(id=in_id)
+            id = pk
+            if id is not None:
+                # id = request.data.get('id',None)
+                stu = Students.objects.get(id=id)
                 serializer = StudentSerializer(stu)
                 return Response({'Students':serializer.data})
             stu = Students.objects.all()
@@ -35,7 +36,7 @@ class StudentsAPI(APIView):
         try:
             id = request.data.get('id',None)
             stu = Students.objects.get(pk=id)
-            serializer = StudentSerializer(stu, data=request.data, partial=True)
+            serializer = StudentSerializer(stu, data=request.data)
             if serializer.is_valid():
                 serializer.save()
                 return Response({'msg':'Student Updated'},status=status.HTTP_201_CREATED)
@@ -43,7 +44,7 @@ class StudentsAPI(APIView):
         except Exception as e:
             return Response({'error msg':str(e)}, status=status.HTTP_400_BAD_REQUEST)
     
-    def put(self, request, format=None):
+    def patch(self, request, format=None):
         try:
             id = request.data.get('id',None)
             stu = Students.objects.get(pk=id)
@@ -55,9 +56,9 @@ class StudentsAPI(APIView):
         except Exception as e:
             return Response({'error msg':str(e)}, status=status.HTTP_400_BAD_REQUEST)
         
-    def delete(self, request, format=None):
+    def delete(self, request, pk=None, format=None):
         try:
-            id = request.data.get('id',None)
+            id = pk
             stu = Students.objects.get(pk=id)
             stu.delete()
             return Response({'msg':'Student deleted'})
