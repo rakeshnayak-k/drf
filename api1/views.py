@@ -19,7 +19,7 @@ def students(request):
             if in_id is not None:
                 stu = Students.objects.get(id=in_id)
                 serializer = StudentSerializer(stu)
-                return Response({'Students':serializer.data})
+                return Response({'Students':serializer.data}) 
             stu = Students.objects.all()
             serializer = StudentSerializer(stu, many=True)
             return Response({'Students':serializer.data})

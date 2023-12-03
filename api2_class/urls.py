@@ -5,4 +5,5 @@ from .views import StudentsAPI
 urlpatterns = [
     path('students/', StudentsAPI.as_view()),
     path('students/<int:pk>/', StudentsAPI.as_view()),
+    
 ]
