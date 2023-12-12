@@ -8,7 +8,6 @@ import uuid
 #     class Meta:
 #         abstract = True
 
-
 class Students(models.Model):
     name = models.CharField(max_length=50)
     roll = models.IntegerField()
