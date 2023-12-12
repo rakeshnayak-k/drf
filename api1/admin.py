@@ -6,3 +6,6 @@ from .models import Students
 class StudentsAdmin(admin.ModelAdmin):
     list_display = ['id','roll','name','city']
     ordering = ['id']
+
+
+    
