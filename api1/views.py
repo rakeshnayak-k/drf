@@ -10,7 +10,6 @@ from rest_framework import status
 # @api_view()
 # def hello_world(request):
 #     return Response({'msg':'Hello World'})
-
 @api_view(['POST','GET','PUT','DELETE','PATCH'])
 def students(request):
     if request.method == 'GET':
@@ -56,7 +55,6 @@ def students(request):
             return Response({'error msg':serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
             return Response({'error msg':str(e)}, status=status.HTTP_400_BAD_REQUEST)
-        
     if request.method == 'DELETE':
         try:
             id = request.data.get('id',None)
